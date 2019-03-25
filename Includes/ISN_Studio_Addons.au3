@@ -9804,7 +9804,19 @@ Func _Neuen_Changelogeintrag_erstellen()
 	IniWrite($Pfad_zur_Project_ISN, $Changelog_Section, "items", $Items_String)
 	IniWrite($Pfad_zur_Project_ISN, $Changelog_Section, "text[" & $NewitemID & "]", "")
 	IniWrite($Pfad_zur_Project_ISN, $Changelog_Section, "date[" & $NewitemID & "]", @YEAR & "/" & @MON & "/" & @MDAY)
-	IniWrite($Pfad_zur_Project_ISN, $Changelog_Section, "editor[" & $NewitemID & "]", @UserName)
+	
+	;Original version - Start
+;~ 	IniWrite($Pfad_zur_Project_ISN, $Changelog_Section, "editor[" & $NewitemID & "]", @UserName)
+	;Original version - End
+	
+	;Belfigor Fix - Start
+	If _ProjectISN_Config_Read("changelog_use_author_from_project", "false") = "true" Then
+		IniWrite($Pfad_zur_Project_ISN, $Changelog_Section, "editor[" & $NewitemID & "]", _ProjectISN_Config_Read("author", ""))
+	Else
+		IniWrite($Pfad_zur_Project_ISN, $Changelog_Section, "editor[" & $NewitemID & "]", @UserName)
+	EndIf
+	;Belfigor Fix - End
+	
 	IniWrite($Pfad_zur_Project_ISN, $Changelog_Section, "version[" & $NewitemID & "]", IniRead($Project_ISN, "ISNAUTOITSTUDIO", "version", ""))
 	_Aenderungsmanager_Aktualisiere_Liste()
 	If _GUICtrlListView_GetItemCount($changelogmanager_listview) = 0 Then Return
