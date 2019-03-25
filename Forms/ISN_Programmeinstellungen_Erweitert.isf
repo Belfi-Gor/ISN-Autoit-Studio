@@ -1,0 +1,385 @@
+; -- Created with ISN Form Studio 2 for ISN AutoIt Studio -- ;
+#include <StaticConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <WindowsConstants.au3>
+#Include <GuiButton.au3>
+
+$ISNSettings_Advanced_Page = GUICreate("ISNSettings_Advanced_Page",771,555,-1,-1,$WS_POPUP,-1)
+GUISetBkColor(0xFFFFFF,$ISNSettings_Advanced_Page)
+_Control_set_DPI_Scaling($ISNSettings_Advanced_Page)
+GUISetBkColor($Fenster_Hintergrundfarbe,$ISNSettings_Advanced_Page)
+GUISetFont ($Default_font_size,400, 0,$Default_font,$ISNSettings_Advanced_Page)
+_WinAPI_SetParent($ISNSettings_Advanced_Page, $Config_GUI)
+
+GUICtrlCreateButton(_Get_langstr(926),10,145,363,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Konfiguration_Exportieren_Zeige_GUI")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll, 143,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreatePic("",10,5,32,32,-1,-1)
+GUICtrlSetResizing(-1,802)
+_Control_set_DPI_Scaling(-1)
+_SetIconAlpha(-1, $bigiconsdll,725,32,32)
+GUICtrlCreateLabel(_Get_langstr(493),51,9,692,25,-1,-1)
+GUICtrlSetFont(-1,12,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,546)
+GUICtrlSetFont(-1,12,400,0,$Default_font)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(931),390,145,373,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Konfiguration_Importieren")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll, 1089,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateLabel("Studioversion",5,526,544,15,-1,-1)
+GUICtrlSetColor(-1,"0xA2A2A2")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,578)
+_Control_set_DPI_Scaling(-1)
+GUICtrlSetData(-1,"ISN AutoIt Studio Version "&$Studioversion & " , "&$ERSTELLUNGSTAG)
+GUICtrlCreateButton(_Get_langstr(306),589,512,174,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Show_Studio_Debug")
+GUICtrlSetResizing(-1,836)
+Button_AddIcon(-1, $smallIconsdll, 1374,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(671),390,45,373,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Reset_letzte_elemente")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll,1454,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(494),10,45,363,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Reset_Warnmeldungen")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll, 267,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(788),390,95,373,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Ersteinrichtungsassistenten_wiederherstellen")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll,1710,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(787),10,95,363,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Testprojekt_anlegen")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll,1897,0)
+_Control_set_DPI_Scaling(-1)
+
+
+
+#cs
+[gui]
+Handle_deklaration=
+Handle_deklaration_const=false
+title=ISNSettings_Advanced_Page
+breite=771
+hoehe=555
+style=$WS_POPUP
+exstyle=-1
+bgcolour=0xFFFFFF
+bgimage=none
+handle=$ISNSettings_Advanced_Page
+parent=
+code=_Control_set_DPI_Scaling($gui_handle)[BREAK]GUISetBkColor($Fenster_Hintergrundfarbe,$gui_handle)[BREAK]GUISetFont ($Default_font_size,400, 0,$Default_font,$gui_handle)[BREAK]_WinAPI_SetParent($gui_handle, $Config_GUI)[BREAK][BREAK]
+codebeforegui=
+xpos=-1
+ypos=-1
+center_gui=true
+title_textmode=normal
+isf_include_once=false
+only_controls_in_isf=false
+const_modus=default
+gui_code_in_function=false
+gui_code_in_function_name=
+gui_event_close=
+gui_event_minimize=
+gui_event_restore=
+gui_event_maximize=
+gui_event_mousemove=
+gui_event_primarydown=
+gui_event_primaryup=
+gui_event_secoundarydown=
+gui_event_secoundaryup=
+gui_event_resized=
+gui_event_dropped=
+[0x008332E2]
+handle=409
+locked=0
+code=GUICtrlSetFont(-1,12,400,0,$Default_font)[BREAK]GUICtrlSetColor(-1,$Titel_Schriftfarbe)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=label
+x=51
+y=9
+width=692
+height=25
+text=_Get_langstr(493)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=12
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=10
+tabpage=-1
+textmode=func
+iconindex=
+resize=546
+[0x007232E4]
+handle=410
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll, 267,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=10
+y=45
+width=363
+height=30
+text=_Get_langstr(494)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Reset_Warnmeldungen
+bgimage=
+order=18
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+[0x00732D7A]
+handle=411
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll,1454,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=390
+y=45
+width=373
+height=30
+text=_Get_langstr(671)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Reset_letzte_elemente
+bgimage=
+order=18
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+[0x0079335E]
+handle=412
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll,1897,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=10
+y=95
+width=363
+height=30
+text=_Get_langstr(787)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Testprojekt_anlegen
+bgimage=
+order=18
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+[0x007232DE]
+handle=413
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll,1710,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=390
+y=95
+width=373
+height=30
+text=_Get_langstr(788)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Ersteinrichtungsassistenten_wiederherstellen
+bgimage=
+order=18
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+[0x00783424]
+handle=414
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll, 1374,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=589
+y=512
+width=174
+height=30
+text=_Get_langstr(306)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Show_Studio_Debug
+bgimage=
+order=18
+tabpage=-1
+textmode=func
+iconindex=
+resize=836
+[0x007A340C]
+handle=415
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]GUICtrlSetData(-1,"ISN AutoIt Studio Version "&$Studioversion & " , "&$ERSTELLUNGSTAG)
+type=label
+x=5
+y=526
+width=544
+height=15
+text=Studioversion
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0xA2A2A2
+bgcolour=-2
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=17
+tabpage=-1
+textmode=text
+iconindex=
+resize=578
+[0x0078333A]
+handle=416
+locked=0
+resize=802
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]_SetIconAlpha(-1, $bigiconsdll,725,32,32)
+type=image
+x=10
+y=5
+width=32
+height=32
+tooltip=
+text=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=10
+tabpage=-1
+iconindex=
+textmode=text
+[0x00793314]
+handle=417
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll, 143,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=10
+y=145
+width=363
+height=30
+text=_Get_langstr(926)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Konfiguration_Exportieren_Zeige_GUI
+bgimage=
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+order=10
+[0x007B3300]
+handle=418
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll, 1089,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=390
+y=145
+width=373
+height=30
+text=_Get_langstr(931)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Konfiguration_Importieren
+bgimage=
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+order=11
+#ce

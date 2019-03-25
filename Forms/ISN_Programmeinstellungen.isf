@@ -1,0 +1,432 @@
+; -- Created with ISN Form Studio 2 for ISN AutoIt Studio -- ;
+#include <StaticConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <WindowsConstants.au3>
+#Include <GuiButton.au3>
+#include <TreeViewConstants.au3>
+
+$Config_GUI = GUICreate(_Get_langstr(42),1013,690,-1,-1,BitOr($WS_POPUP,$WS_CAPTION,$WS_SIZEBOX,$WS_SYSMENU,$WS_MAXIMIZEBOX),$ISN_WS_EX_MDICHILD,$StudioFenster)
+GUISetBkColor(0xFFFFFF,$Config_GUI)
+GUISetOnEvent($GUI_EVENT_CLOSE, "_HIDE_Configgui", $Config_GUI)
+GUISetOnEvent($GUI_EVENT_MINIMIZE, "_Elemente_an_Fesntergroesse_anpassen", $Config_GUI)
+GUISetOnEvent($GUI_EVENT_RESTORE, "_Elemente_an_Fesntergroesse_anpassen", $Config_GUI)
+GUISetOnEvent($GUI_EVENT_MAXIMIZE, "_Elemente_an_Fesntergroesse_anpassen", $Config_GUI)
+GUISetOnEvent($GUI_EVENT_RESIZED, "_Elemente_an_Fesntergroesse_anpassen", $Config_GUI)
+GUISetBkColor($Fenster_Hintergrundfarbe,$Config_GUI)
+_Control_set_DPI_Scaling($Config_GUI)
+_GUISetIcon($Config_GUI, $smallIconsdll,1080)
+_CenterOnMonitor($Config_GUI ,"", $Runonmonitor)
+GUISetBkColor($Fenster_Hintergrundfarbe,$Config_GUI)
+GUISetFont ($Default_font_size,400, 0,$Default_font,$Config_GUI)
+guictrlcreatepic(@scriptdir&"\Data\wintop.jpg",0,0,1013,55)
+GUICtrlSetResizing(-1,550)
+_Control_set_DPI_Scaling(-1)
+if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\wintop_dark.png")
+GUICtrlSetState(-1,$GUI_DISABLE)
+guictrlcreatepic(@scriptdir&"\Data\row_bottom.jpg",0,690-50,1013,50)
+GUICtrlSetResizing(-1,578)
+_Control_set_DPI_Scaling(-1)
+if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\row_bottom_dark.png")
+GUICtrlSetState(-1,$GUI_DISABLE)
+Global $hToolTip_Config_GUI = _GUIToolTip_Create($Config_GUI)
+GUICtrlCreateButton(_Get_langstr(8),200,650,185,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_HIDE_Configgui")
+GUICtrlSetResizing(-1,834)
+Button_AddIcon(-1, $smallIconsdll, 1173,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(165),10,650,185,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Save_Settings")
+GUICtrlSetResizing(-1,834)
+Button_AddIcon(-1, $smallIconsdll, 314,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateLabel(_Get_langstr(42),55,13,937,32,-1,-1)
+GUICtrlSetFont(-1,16,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,550)
+GUICtrlSetData(-1,_Get_langstr(1)&" - "&_Get_langstr(42))
+GUICtrlSetFont(-1,16,400,0,$Default_font)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateGroup("",10,50,995,582,-1,-1)
+GUICtrlSetBkColor(-1,"0xFFFFFF")
+GUICtrlSetResizing(-1,102)
+_Control_set_DPI_Scaling(-1)
+$config_selectorlist = GUICtrlCreateTreeView(17,95,177,524,BitOr($TVS_HASBUTTONS,$TVS_LINESATROOT,$TVS_DISABLEDRAGDROP,$TVS_SHOWSELALWAYS,$TVS_RTLREADING,$TVS_TRACKSELECT,$TVS_FULLROWSELECT),512)
+GUICtrlSetResizing(-1,354)
+_Control_set_DPI_Scaling($config_selectorlist)
+_GUICtrlTreeView_SetHeight($config_selectorlist, 30)
+_GUICtrlTreeView_SetIndent($config_selectorlist, 5)
+GUICtrlSetFont($config_selectorlist,$Default_font_size,400, 0,$Default_font)
+_GUICtrlTreeView_SetNormalImageList($config_selectorlist, $hImage)
+
+Global $config_navigation_general = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(125), 5,5) ;Allgemein
+Global $config_navigation_update =  _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_general, _Get_langstr(883),56,56) ;Auto Update
+Global $config_navigation_trophies = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_general, _Get_langstr(261),58,58) ;Trophys
+Global $config_navigation_advanced =  _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_general, _Get_langstr(493), 50,50) ;Erweitert
+
+Global $config_navigation_display = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(447), 46,46) ;Darstellung
+Global $config_navigation_monitorandwindows =  _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_display  , _Get_langstr(1354), 120,120) ;Display and Windows
+Global $config_navigation_quickview = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_display  , _Get_langstr(1204), 119,119) ;Quick View Area
+Global $config_navigation_toolbar = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_display  , _Get_langstr(952), 60,60) ;Toolbar
+Global $config_navigation_skins = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_display  , _Get_langstr(482), 49,49) ;Skins
+
+
+Global $config_navigation_scripteditor = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(196), 10,10) ;Skript Editor
+Global $config_navigation_scripttree =  _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_scripteditor , _Get_langstr(469),51,51) ;Skriptbaum
+Global $config_navigation_filetypes = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_scripteditor , _Get_langstr(1109),101,101) ;Dateitypen
+Global $config_navigation_tidy = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_scripteditor , _Get_langstr(327),61,61) ;Tidy
+Global $config_navigation_colors = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_scripteditor , _Get_langstr(884),57,57) ;Farben
+
+Global $config_navigation_autosave = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(1085), 63,63) ;Automatische Speicherung
+Global $config_navigation_autobackup = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(206), 41,41) ;Auto Backup
+Global $config_navigation_programpaths = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(260), 42,42) ;Programmpfade
+Global $config_navigation_includes = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_programpaths  , _Get_langstr(1074), 38,38) ;Includes
+Global $config_navigation_autoitPaths = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_programpaths  , _Get_langstr(407), 107,107) ;AutoIt Pfade
+Global $config_navigation_apis = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_programpaths  , _Get_langstr(1121), 102,102) ;API und Proberties Pfade
+
+Global $config_navigation_macrosecurity = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(1150), 52,52) ;Makrosicherheit
+Global $config_navigation_hotkeys = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(676), 55,55) ;Hotkeys
+Global $config_navigation_Plugins = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(138), 43,43) ;Plugins
+Global $config_navigation_Tools = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(607), 113,113) ;Tools
+Global $config_navigation_language = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(130), 44,44) ;Sprache
+GUICtrlCreateLabel(_Get_langstr(408),21,70,165,19,$SS_CENTER,-1)
+GUICtrlSetFont(-1,9,700,0,"Segoe UI")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,802)
+_Control_set_DPI_Scaling(-1)
+$Config_GUI_Dummy_Control = GUICtrlCreateGroup("",210,60,782,561,-1,-1)
+GUICtrlSetBkColor(-1,"0xFFFFFF")
+GUICtrlSetResizing(-1,102)
+_Control_set_DPI_Scaling($Config_GUI_Dummy_Control)
+GUICtrlCreateGroup("",199,60,6,561,-1,-1)
+GUICtrlSetBkColor(-1,"0xFFFFFF")
+GUICtrlSetResizing(-1,354)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateLabel(_Get_langstr(166),393,658,612,15,-1,-1)
+GUICtrlSetColor(-1,"0xFF0000")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,578)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreatePic("",13,13,32,32,-1,-1)
+_Control_set_DPI_Scaling(-1)
+_SetIconAlpha(-1, $bigiconsdll,728+1,32,32)
+
+
+
+#cs
+[gui]
+Handle_deklaration=
+Handle_deklaration_const=false
+title=_Get_langstr(42)
+breite=1013
+hoehe=690
+style=$WS_POPUP+$WS_CAPTION+$WS_SIZEBOX+$WS_SYSMENU+$WS_MAXIMIZEBOX
+exstyle=$ISN_WS_EX_MDICHILD
+bgcolour=0xFFFFFF
+bgimage=none
+handle=$Config_GUI
+parent=$StudioFenster
+code=GUISetBkColor($Fenster_Hintergrundfarbe,$Config_GUI)[BREAK]_Control_set_DPI_Scaling($Config_GUI)[BREAK]_GUISetIcon($Config_GUI, $smallIconsdll,1080)[BREAK]_CenterOnMonitor($Config_GUI ,"", $Runonmonitor)[BREAK]GUISetBkColor($Fenster_Hintergrundfarbe,$Config_GUI)[BREAK]GUISetFont ($Default_font_size,400, 0,$Default_font,$Config_GUI)[BREAK]guictrlcreatepic(@scriptdir&"\Data\wintop.jpg",0,0,1013,55)[BREAK]GUICtrlSetResizing(-1,550)[BREAK]_Control_set_DPI_Scaling(-1)[BREAK]if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\wintop_dark.png")[BREAK]GUICtrlSetState(-1,$GUI_DISABLE)[BREAK]guictrlcreatepic(@scriptdir&"\Data\row_bottom.jpg",0,690-50,1013,50)[BREAK]GUICtrlSetResizing(-1,578)[BREAK]_Control_set_DPI_Scaling(-1)[BREAK]if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\row_bottom_dark.png")[BREAK]GUICtrlSetState(-1,$GUI_DISABLE)[BREAK]Global $hToolTip_Config_GUI = _GUIToolTip_Create($Config_GUI)[BREAK]
+codebeforegui=
+xpos=-1
+ypos=-1
+center_gui=true
+title_textmode=func
+isf_include_once=false
+only_controls_in_isf=false
+const_modus=default
+gui_code_in_function=false
+gui_code_in_function_name=
+gui_event_close=_HIDE_Configgui
+gui_event_minimize=_Elemente_an_Fesntergroesse_anpassen
+gui_event_restore=_Elemente_an_Fesntergroesse_anpassen
+gui_event_maximize=_Elemente_an_Fesntergroesse_anpassen
+gui_event_mousemove=
+gui_event_primarydown=
+gui_event_primaryup=
+gui_event_secoundarydown=
+gui_event_secoundaryup=
+gui_event_resized=_Elemente_an_Fesntergroesse_anpassen
+gui_event_dropped=
+[0x00153492]
+handle=409
+locked=0
+code=GUICtrlSetData(-1,_Get_langstr(1)&" - "&_Get_langstr(42))[BREAK]GUICtrlSetFont(-1,16,400,0,$Default_font)[BREAK]GUICtrlSetColor(-1,$Titel_Schriftfarbe)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=label
+x=55
+y=13
+width=937
+height=32
+text=_Get_langstr(42)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=16
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=2
+tabpage=-1
+textmode=func
+iconindex=
+resize=550
+[0x001034AC]
+handle=410
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)
+type=group
+x=10
+y=50
+width=995
+height=582
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xFFFFFF
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=3
+tabpage=-1
+textmode=text
+iconindex=
+resize=102
+[0x000E34A6]
+handle=411
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)
+type=label
+x=21
+y=70
+width=165
+height=19
+text=_Get_langstr(408)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$SS_CENTER
+exstyle=
+textcolour=0x000000
+bgcolour=-2
+font=Segoe UI
+fontsize=9
+fontstyle=700
+fontattribute=0
+id=
+func=
+bgimage=
+order=5
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+[0x000E34A8]
+handle=412
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]_GUICtrlTreeView_SetHeight($config_selectorlist, 30)[BREAK]_GUICtrlTreeView_SetIndent($config_selectorlist, 5)[BREAK]GUICtrlSetFont($config_selectorlist,$Default_font_size,400, 0,$Default_font)[BREAK]_GUICtrlTreeView_SetNormalImageList($config_selectorlist, $hImage)[BREAK][BREAK]Global $config_navigation_general = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(125), 5,5) ;Allgemein[BREAK]Global $config_navigation_update =  _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_general, _Get_langstr(883),56,56) ;Auto Update[BREAK]Global $config_navigation_trophies = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_general, _Get_langstr(261),58,58) ;Trophys[BREAK]Global $config_navigation_advanced =  _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_general, _Get_langstr(493), 50,50) ;Erweitert[BREAK][BREAK]Global $config_navigation_display = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(447), 46,46) ;Darstellung[BREAK]Global $config_navigation_monitorandwindows =  _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_display  , _Get_langstr(1354), 120,120) ;Display and Windows[BREAK]Global $config_navigation_quickview = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_display  , _Get_langstr(1204), 119,119) ;Quick View Area[BREAK]Global $config_navigation_toolbar = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_display  , _Get_langstr(952), 60,60) ;Toolbar[BREAK]Global $config_navigation_skins = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_display  , _Get_langstr(482), 49,49) ;Skins[BREAK][BREAK][BREAK]Global $config_navigation_scripteditor = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(196), 10,10) ;Skript Editor[BREAK]Global $config_navigation_scripttree =  _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_scripteditor , _Get_langstr(469),51,51) ;Skriptbaum[BREAK]Global $config_navigation_filetypes = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_scripteditor , _Get_langstr(1109),101,101) ;Dateitypen[BREAK]Global $config_navigation_tidy = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_scripteditor , _Get_langstr(327),61,61) ;Tidy[BREAK]Global $config_navigation_colors = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_scripteditor , _Get_langstr(884),57,57) ;Farben[BREAK][BREAK]Global $config_navigation_autosave = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(1085), 63,63) ;Automatische Speicherung[BREAK]Global $config_navigation_autobackup = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(206), 41,41) ;Auto Backup[BREAK]Global $config_navigation_programpaths = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(260), 42,42) ;Programmpfade[BREAK]Global $config_navigation_includes = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_programpaths  , _Get_langstr(1074), 38,38) ;Includes[BREAK]Global $config_navigation_autoitPaths = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_programpaths  , _Get_langstr(407), 107,107) ;AutoIt Pfade[BREAK]Global $config_navigation_apis = _GUICtrlTreeView_AddChild($config_selectorlist, $config_navigation_programpaths  , _Get_langstr(1121), 102,102) ;API und Proberties Pfade[BREAK][BREAK]Global $config_navigation_macrosecurity = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(1150), 52,52) ;Makrosicherheit[BREAK]Global $config_navigation_hotkeys = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(676), 55,55) ;Hotkeys[BREAK]Global $config_navigation_Plugins = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(138), 43,43) ;Plugins[BREAK]Global $config_navigation_Tools = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(607), 113,113) ;Tools[BREAK]Global $config_navigation_language = _GUICtrlTreeView_Add($config_selectorlist, 0,_Get_langstr(130), 44,44) ;Sprache
+type=treeview
+x=17
+y=95
+width=177
+height=524
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$TVS_HASBUTTONS+$TVS_LINESATROOT+$TVS_DISABLEDRAGDROP+$TVS_SHOWSELALWAYS+$TVS_RTLREADING+$TVS_TRACKSELECT+$TVS_FULLROWSELECT
+exstyle=512
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$config_selectorlist
+func=
+bgimage=
+order=4
+tabpage=-1
+textmode=text
+iconindex=
+resize=354
+[0x001034AA]
+handle=413
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)
+type=group
+x=199
+y=60
+width=6
+height=561
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xFFFFFF
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=7
+tabpage=-1
+textmode=text
+iconindex=
+resize=354
+[0x000E34A4]
+handle=414
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)
+type=group
+x=210
+y=60
+width=782
+height=561
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xFFFFFF
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Config_GUI_Dummy_Control
+func=
+bgimage=
+order=6
+tabpage=-1
+textmode=text
+iconindex=
+resize=102
+[0x00113496]
+handle=415
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll, 314,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=10
+y=650
+width=185
+height=30
+text=_Get_langstr(165)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Save_Settings
+bgimage=
+order=1
+tabpage=-1
+textmode=func
+iconindex=
+resize=834
+[0x000E34B0]
+handle=416
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll, 1173,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=200
+y=650
+width=185
+height=30
+text=_Get_langstr(8)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_HIDE_Configgui
+bgimage=
+order=0
+tabpage=-1
+textmode=func
+iconindex=
+resize=834
+[0x000E33CE]
+handle=417
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)
+type=label
+x=393
+y=658
+width=612
+height=15
+text=_Get_langstr(166)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0xFF0000
+bgcolour=-2
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=8
+tabpage=-1
+textmode=func
+iconindex=
+resize=578
+[0x000E33C4]
+handle=418
+locked=0
+resize=
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]_SetIconAlpha(-1, $bigiconsdll,728+1,32,32)
+type=image
+x=13
+y=13
+width=32
+height=32
+tooltip=
+text=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=10
+tabpage=-1
+iconindex=
+textmode=text
+#ce

@@ -1,0 +1,231 @@
+; -- Created with ISN Form Studio 2 for ISN AutoIt Studio -- ;
+#include <StaticConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <WindowsConstants.au3>
+#Include <GuiButton.au3>
+#include <TreeViewConstants.au3>
+#include <EditConstants.au3>
+
+$ISN_Thread_Scripttree_GUI = GUICreate("scripttree#ISN_PARENT#",300,500,-1,-1,BitOr($WS_POPUP,$WS_SYSMENU),-1)
+GUISetFont ($Default_font_size,400, 0,$Default_font,$ISN_Thread_Scripttree_GUI)
+GUISetBkColor($Fenster_Hintergrundfarbe,$ISN_Thread_Scripttree_GUI)
+
+Global $ToolTip_Handler_Scripttree = _GUIToolTip_Create($ISN_Thread_Scripttree_GUI)
+
+;Skriptbaum Einstellungsdropdown
+$Skriptbaum_SetupMenu_dummy = GUICtrlCreateDummy()
+$Skriptbaum_SetupMenu = GUICtrlCreateContextMenu($Skriptbaum_SetupMenu_dummy)
+$Skriptbaum_SetupMenu_Handle = GUICtrlGetHandle($Skriptbaum_SetupMenu)
+$Skriptbaum_SetupMenu_Filter = _GUICtrlCreateODMenuItem(_Get_langstr(964), $Skriptbaum_SetupMenu, $smallIconsdll, 1338) ;Filter erstellen
+$Skriptbaum_SetupMenu_setup_scripttree = _GUICtrlCreateODMenuItem(_Get_langstr(421), $Skriptbaum_SetupMenu, $smallIconsdll, 1717) ;Skriptbaum konfigrieren
+
+;Scripttree menus
+$Scripttree_contextmenu_dummy = GUICtrlCreateDummy()
+Global $Scripttree_contextmenu = GUICtrlCreateContextMenu($Scripttree_contextmenu_dummy)
+Global $Scripttree_contextmenu_Handle = GUICtrlGetHandle($Scripttree_contextmenu)
+Global $Scripttree_contextmenu_show_comment = GUICtrlCreateMenuItem(_Get_langstr(329), $Scripttree_contextmenu)
+Global $Scripttree_contextmenu_open_file = GUICtrlCreateMenuItem(_Get_langstr(508), $Scripttree_contextmenu)
+Global $Scripttree_contextmenu_go_to_element = GUICtrlCreateMenuItem(_Get_langstr(330), $Scripttree_contextmenu)
+Global $Scripttree_contextmenu_code_snippet = GUICtrlCreateMenuItem(_Get_langstr(809), $Scripttree_contextmenu)
+_GUICtrlMenu_SetMenuStyle($Scripttree_contextmenu_Handle, $MNS_NOCHECK)
+
+
+If $Skin_is_used = "true" Then
+	Global $Scripttree_Refresh_Button = GUICtrlCreateButton("",1150,53,20,20,$BS_ICON)
+	_GUICtrlButton_SetImage($Scripttree_Refresh_Button, $smallIconsdll, 210, false)
+Else
+	Global $Scripttree_Refresh_Button = GUICtrlCreateButton("", 1050, 53, 20, 20)
+	Button_AddIcon(-1, $smallIconsdll, 210, 4)
+EndIf
+GUICtrlSetOnEvent(-1, "_Scripttree_Force_Refresh_Button")
+_GUIToolTip_AddTool($ToolTip_Handler_Scripttree, 0, _Get_langstr(1071), GUICtrlGetHandle($Scripttree_Refresh_Button))
+
+
+If $Skin_is_used = "true" Then
+	Global $Scripttree_Settings_Button = GUICtrlCreateButton("",1150,53,20,20,$BS_ICON)
+	_GUICtrlButton_SetImage($Scripttree_Settings_Button, $smallIconsdll, 1080, false)
+Else
+	Global $Scripttree_Settings_Button = GUICtrlCreateButton("", 1150, 53, 20, 20)
+	Button_AddIcon(-1, $smallIconsdll, 1080, 4)
+EndIf
+_GUIToolTip_AddTool($ToolTip_Handler_Scripttree, 0, _Get_langstr(419), GUICtrlGetHandle($Scripttree_Settings_Button))
+GUICtrlSetOnEvent(-1, "_Scripttree_Show_Settings_ContextMenu")
+$ISN_Scripttree = GUICtrlCreateTreeView(0,30,300,470,-1,-1)
+GUICtrlSetResizing(-1,102)
+GUICtrlSetStyle($ISN_Scripttree, BitOR($TVS_HASBUTTONS, $TVS_HASLINES, $TVS_NOTOOLTIPS, $TVS_LINESATROOT, $TVS_SHOWSELALWAYS), $WS_EX_CLIENTEDGE)
+If $Skin_is_used = "false" And Not _WinAPI_GetVersion() < '6.0' Then _WinAPI_SetWindowTheme(GUICtrlGetHandle($ISN_Scripttree), 'Explorer')
+_GUICtrlTreeView_SetNormalImageList($ISN_Scripttree, $Helper_Imagelist)
+GUICtrlSetState ($ISN_Scripttree, $GUI_FOCUS)
+$ISN_Scripttree_loading_icon = GUICtrlCreateIcon("",-1,130,230,32,32,-1,-1)
+GUICtrlSetState(-1,BitOr($GUI_SHOW,$GUI_ENABLE,$GUI_DISABLE))
+_Control_set_DPI_Scaling($ISN_Scripttree_loading_icon, true)
+GUICtrlSetImage($ISN_Scripttree_loading_icon,$Loading2_Ani)
+GUICtrlSetState($ISN_Scripttree_loading_icon,$GUI_HIDE)
+GUICtrlSetBkColor($ISN_Scripttree_loading_icon,0xFFFFFF)
+$ISN_Scripttree_loading_label = GUICtrlCreateLabel(_Get_langstr(1036),20,80,200,80,$SS_CENTER,-1)
+GUICtrlSetState(-1,BitOr($GUI_SHOW,$GUI_ENABLE,$GUI_DISABLE))
+GUICtrlSetColor(-1,"0x808080")
+GUICtrlSetBkColor(-1,"-2")
+_Control_set_DPI_Scaling($ISN_Scripttree_loading_label)
+GUICtrlSetState($ISN_Scripttree_loading_label,$GUI_HIDE)
+$Scripttree_Search_input = GUICtrlCreateInput("",2,2,244,20,-1,$WS_EX_CLIENTEDGE)
+GUICtrlSetResizing(-1,6)
+GUICtrlSetBkColor(-1, $Skriptbaum_Suchfeld_Hintergrundfarbe)
+GUICtrlSetColor(-1, $Skriptbaum_Suchfeld_Schriftfarbe)
+If _ist_windows_vista_oder_hoeher() Then
+	GUICtrlSendMsg($Scripttree_Search_input, 0x1501, False, _Get_langstr(443))
+Else
+	GUICtrlSendMsg($Scripttree_Search_input, 0x1501, False, " " & _Get_langstr(443))
+EndIf
+GUICtrlSetCursor($Scripttree_Search_input, 5)
+
+
+
+#cs
+[gui]
+Handle_deklaration=default
+Handle_deklaration_const=false
+title=scripttree#ISN_PARENT#
+breite=300
+hoehe=500
+style=$WS_POPUP+$WS_SYSMENU
+exstyle=-1
+bgcolour=0xF0F0F0
+bgimage=none
+handle=$ISN_Thread_Scripttree_GUI
+parent=
+code=GUISetFont ($Default_font_size,400, 0,$Default_font,$GUI_HANDLE)[BREAK]GUISetBkColor($Fenster_Hintergrundfarbe,$GUI_HANDLE)[BREAK][BREAK]Global $ToolTip_Handler_Scripttree = _GUIToolTip_Create($GUI_HANDLE)[BREAK][BREAK];Skriptbaum Einstellungsdropdown[BREAK]$Skriptbaum_SetupMenu_dummy = GUICtrlCreateDummy()[BREAK]$Skriptbaum_SetupMenu = GUICtrlCreateContextMenu($Skriptbaum_SetupMenu_dummy)[BREAK]$Skriptbaum_SetupMenu_Handle = GUICtrlGetHandle($Skriptbaum_SetupMenu)[BREAK]$Skriptbaum_SetupMenu_Filter = _GUICtrlCreateODMenuItem(_Get_langstr(964), $Skriptbaum_SetupMenu, $smallIconsdll, 1338) ;Filter erstellen[BREAK]$Skriptbaum_SetupMenu_setup_scripttree = _GUICtrlCreateODMenuItem(_Get_langstr(421), $Skriptbaum_SetupMenu, $smallIconsdll, 1717) ;Skriptbaum konfigrieren[BREAK][BREAK];Scripttree menus[BREAK]$Scripttree_contextmenu_dummy = GUICtrlCreateDummy()[BREAK]Global $Scripttree_contextmenu = GUICtrlCreateContextMenu($Scripttree_contextmenu_dummy)[BREAK]Global $Scripttree_contextmenu_Handle = GUICtrlGetHandle($Scripttree_contextmenu)[BREAK]Global $Scripttree_contextmenu_show_comment = GUICtrlCreateMenuItem(_Get_langstr(329), $Scripttree_contextmenu)[BREAK]Global $Scripttree_contextmenu_open_file = GUICtrlCreateMenuItem(_Get_langstr(508), $Scripttree_contextmenu)[BREAK]Global $Scripttree_contextmenu_go_to_element = GUICtrlCreateMenuItem(_Get_langstr(330), $Scripttree_contextmenu)[BREAK]Global $Scripttree_contextmenu_code_snippet = GUICtrlCreateMenuItem(_Get_langstr(809), $Scripttree_contextmenu)[BREAK]_GUICtrlMenu_SetMenuStyle($Scripttree_contextmenu_Handle, $MNS_NOCHECK)[BREAK][BREAK][BREAK]If $Skin_is_used = "true" Then[BREAK]	Global $Scripttree_Refresh_Button = GUICtrlCreateButton("",1150,53,20,20,$BS_ICON)[BREAK]	_GUICtrlButton_SetImage($Scripttree_Refresh_Button, $smallIconsdll, 210, false)[BREAK]Else[BREAK]	Global $Scripttree_Refresh_Button = GUICtrlCreateButton("", 1050, 53, 20, 20)[BREAK]	Button_AddIcon(-1, $smallIconsdll, 210, 4)[BREAK]EndIf[BREAK]GUICtrlSetOnEvent(-1, "_Scripttree_Force_Refresh_Button")[BREAK]_GUIToolTip_AddTool($ToolTip_Handler_Scripttree, 0, _Get_langstr(1071), GUICtrlGetHandle($Scripttree_Refresh_Button))[BREAK][BREAK][BREAK]If $Skin_is_used = "true" Then[BREAK]	Global $Scripttree_Settings_Button = GUICtrlCreateButton("",1150,53,20,20,$BS_ICON)[BREAK]	_GUICtrlButton_SetImage($Scripttree_Settings_Button, $smallIconsdll, 1080, false)[BREAK]Else[BREAK]	Global $Scripttree_Settings_Button = GUICtrlCreateButton("", 1150, 53, 20, 20)[BREAK]	Button_AddIcon(-1, $smallIconsdll, 1080, 4)[BREAK]EndIf[BREAK]_GUIToolTip_AddTool($ToolTip_Handler_Scripttree, 0, _Get_langstr(419), GUICtrlGetHandle($Scripttree_Settings_Button))[BREAK]GUICtrlSetOnEvent(-1, "_Scripttree_Show_Settings_ContextMenu")
+codebeforegui=
+xpos=-1
+ypos=-1
+center_gui=true
+title_textmode=normal
+isf_include_once=false
+only_controls_in_isf=false
+const_modus=default
+gui_code_in_function=false
+gui_code_in_function_name=
+gui_event_close=
+gui_event_minimize=
+gui_event_restore=
+gui_event_maximize=
+gui_event_mousemove=
+gui_event_primarydown=
+gui_event_primaryup=
+gui_event_secoundarydown=
+gui_event_secoundaryup=
+gui_event_resized=
+gui_event_dropped=
+[0x00740C84]
+handle=409
+locked=0
+resize=102
+code=GUICtrlSetStyle($control_handle, BitOR($TVS_HASBUTTONS, $TVS_HASLINES, $TVS_NOTOOLTIPS, $TVS_LINESATROOT, $TVS_SHOWSELALWAYS), $WS_EX_CLIENTEDGE)[BREAK]If $Skin_is_used = "false" And Not _WinAPI_GetVersion() < '6.0' Then _WinAPI_SetWindowTheme(GUICtrlGetHandle($control_handle), 'Explorer')[BREAK]_GUICtrlTreeView_SetNormalImageList($control_handle, $Helper_Imagelist)[BREAK]GUICtrlSetState ($control_handle, $GUI_FOCUS)
+type=treeview
+x=0
+y=30
+width=300
+height=470
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$ISN_Scripttree
+func=
+bgimage=
+order=0
+tabpage=-1
+iconindex=
+textmode=text
+[0x007B0BA4]
+handle=410
+locked=0
+resize=
+code=_Control_set_DPI_Scaling($control_handle, true)[BREAK]GUICtrlSetImage($control_handle,$Loading2_Ani)[BREAK]GUICtrlSetState($control_handle,$GUI_HIDE)[BREAK]GUICtrlSetBkColor($control_handle,0xFFFFFF)
+type=icon
+x=130
+y=230
+width=32
+height=32
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE+$GUI_DISABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$ISN_Scripttree_loading_icon
+func=
+bgimage=
+order=2
+tabpage=-1
+iconindex=
+textmode=text
+[0x00740E6C]
+handle=411
+locked=0
+resize=
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]GUICtrlSetState($control_handle,$GUI_HIDE)
+type=label
+x=20
+y=80
+width=200
+height=80
+text=_Get_langstr(1036)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE+$GUI_DISABLE
+style=$SS_CENTER
+exstyle=
+textcolour=0x808080
+bgcolour=-2
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$ISN_Scripttree_loading_label
+func=
+bgimage=
+order=3
+tabpage=-1
+iconindex=
+textmode=func
+[0x00870E28]
+handle=412
+locked=0
+resize=6
+code=GUICtrlSetBkColor(-1, $Skriptbaum_Suchfeld_Hintergrundfarbe)[BREAK]GUICtrlSetColor(-1, $Skriptbaum_Suchfeld_Schriftfarbe)[BREAK]If _ist_windows_vista_oder_hoeher() Then[BREAK]	GUICtrlSendMsg($control_handle, 0x1501, False, _Get_langstr(443))[BREAK]Else[BREAK]	GUICtrlSendMsg($control_handle, 0x1501, False, " " & _Get_langstr(443))[BREAK]EndIf[BREAK]GUICtrlSetCursor($control_handle, 5)
+type=input
+x=2
+y=2
+width=244
+height=20
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Scripttree_Search_input
+func=
+bgimage=
+order=4
+tabpage=-1
+iconindex=
+textmode=text
+#ce

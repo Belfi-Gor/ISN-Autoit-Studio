@@ -1,0 +1,185 @@
+; -- Created with ISN Form Studio 2 for ISN AutoIt Studio -- ;
+#include <StaticConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <WindowsConstants.au3>
+#Include <GuiButton.au3>
+
+$ISNSettings_Trophies_Page = GUICreate("ISNSettings_Trophies_Page",770,134,-1,-1,$WS_POPUP,-1)
+GUISetBkColor(0xFFFFFF,$ISNSettings_Trophies_Page)
+_Control_set_DPI_Scaling($ISNSettings_Trophies_Page)
+GUISetBkColor($Fenster_Hintergrundfarbe,$ISNSettings_Trophies_Page)
+GUISetFont ($Default_font_size,400, 0,$Default_font,$ISNSettings_Trophies_Page)
+_WinAPI_SetParent($ISNSettings_Trophies_Page, $Config_GUI)
+
+GUICtrlCreatePic("",10,5,32,32,-1,-1)
+GUICtrlSetResizing(-1,802)
+_Control_set_DPI_Scaling(-1)
+_SetIconAlpha(-1, $smallIconsdll,1914,32,32)
+GUICtrlCreateLabel(_Get_langstr(261),51,9,692,25,-1,-1)
+GUICtrlSetFont(-1,12,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,546)
+_Control_set_DPI_Scaling(-1)
+GUICtrlSetFont(-1,12,400,0,$Default_font)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+$Checkbox_disabletrophys = GUICtrlCreateCheckbox(_Get_langstr(1356),10,45,748,20,-1,-1)
+GUICtrlSetBkColor(-1,"0xFFFFFF")
+GUICtrlSetResizing(-1,546)
+_Control_set_DPI_Scaling($Checkbox_disabletrophys)
+GUICtrlCreateButton(_Get_langstr(554),10,85,222,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_reset_trophys")
+GUICtrlSetResizing(-1,802)
+_Control_set_DPI_Scaling(-1)
+Button_AddIcon(-1, $smallIconsdll, 1913,0)
+
+
+
+#cs
+[gui]
+Handle_deklaration=
+Handle_deklaration_const=false
+title=ISNSettings_Trophies_Page
+breite=770
+hoehe=134
+style=$WS_POPUP
+exstyle=-1
+bgcolour=0xFFFFFF
+bgimage=none
+handle=$ISNSettings_Trophies_Page
+parent=
+code=_Control_set_DPI_Scaling($gui_handle)[BREAK]GUISetBkColor($Fenster_Hintergrundfarbe,$gui_handle)[BREAK]GUISetFont ($Default_font_size,400, 0,$Default_font,$gui_handle)[BREAK]_WinAPI_SetParent($gui_handle, $Config_GUI)[BREAK][BREAK]
+codebeforegui=
+xpos=-1
+ypos=-1
+center_gui=true
+title_textmode=normal
+isf_include_once=false
+only_controls_in_isf=false
+const_modus=default
+gui_code_in_function=false
+gui_code_in_function_name=
+gui_event_close=
+gui_event_minimize=
+gui_event_restore=
+gui_event_maximize=
+gui_event_mousemove=
+gui_event_primarydown=
+gui_event_primaryup=
+gui_event_secoundarydown=
+gui_event_secoundaryup=
+gui_event_resized=
+gui_event_dropped=
+[0x000A230C]
+handle=409
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]GUICtrlSetFont(-1,12,400,0,$Default_font)[BREAK]GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+type=label
+x=51
+y=9
+width=692
+height=25
+text=_Get_langstr(261)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=12
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=10
+tabpage=-1
+textmode=func
+iconindex=
+resize=546
+[0x0003230E]
+handle=410
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]Button_AddIcon(-1, $smallIconsdll, 1913,0)
+type=button
+x=10
+y=85
+width=222
+height=30
+text=_Get_langstr(554)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_reset_trophys
+bgimage=
+order=18
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+[0x00032310]
+handle=411
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)
+type=checkbox
+x=10
+y=45
+width=748
+height=20
+text=_Get_langstr(1356)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xFFFFFF
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Checkbox_disabletrophys
+func=
+bgimage=
+order=16
+tabpage=-1
+textmode=func
+iconindex=
+resize=546
+[0x00042312]
+handle=412
+locked=0
+resize=802
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]_SetIconAlpha(-1, $smallIconsdll,1914,32,32)
+type=image
+x=10
+y=5
+width=32
+height=32
+tooltip=
+text=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=6
+tabpage=-1
+iconindex=
+textmode=text
+#ce

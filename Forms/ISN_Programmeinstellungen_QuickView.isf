@@ -1,0 +1,557 @@
+; -- Created with ISN Form Studio 2 for ISN AutoIt Studio -- ;
+#include <StaticConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <WindowsConstants.au3>
+#Include <GuiButton.au3>
+#include <GuiListView.au3>
+
+$ISNSettings_QuickView_Page = GUICreate("ISNSettings_QuickView_Page",791,554,-1,-1,$WS_POPUP,-1)
+GUISetBkColor(0xFFFFFF,$ISNSettings_QuickView_Page)
+_Control_set_DPI_Scaling($ISNSettings_QuickView_Page)
+GUISetBkColor($Fenster_Hintergrundfarbe,$ISNSettings_QuickView_Page)
+GUISetFont ($Default_font_size,400, 0,$Default_font,$ISNSettings_QuickView_Page)
+_WinAPI_SetParent($ISNSettings_QuickView_Page, $Config_GUI)
+_GUIScrollbars_Generate($ISNSettings_QuickView_Page, 0, 10)
+GUICtrlCreateLabel(_Get_langstr(955),10,117,289,25,$SS_CENTER,-1)
+GUICtrlSetFont(-1,10,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,802)
+GUICtrlSetFont(-1,10,400,0,$Default_font)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+_Control_set_DPI_Scaling(-1)
+$settings_quickview_ActiveElements_Listview = GUICtrlCreatelistview("text|id",6,148,293,396,BitOr($LVS_REPORT,$LVS_NOCOLUMNHEADER,$LVS_SINGLESEL,$LVS_SHOWSELALWAYS),$WS_EX_CLIENTEDGE)
+GUICtrlSetResizing(-1,354)
+_Control_set_DPI_Scaling($settings_quickview_ActiveElements_Listview)
+_GUICtrlListView_SetImageList($settings_quickview_ActiveElements_Listview, $hToolBarImageListNorm,1)
+_GUICtrlListView_HideColumn(-1,1)
+$settings_quickview_AvailableElements_Listview = GUICtrlCreatelistview("text|id",465,148,314,396,BitOr($LVS_REPORT,$LVS_NOCOLUMNHEADER,$LVS_SINGLESEL,$LVS_SHOWSELALWAYS),$WS_EX_CLIENTEDGE)
+GUICtrlSetResizing(-1,102)
+_Control_set_DPI_Scaling($settings_quickview_AvailableElements_Listview)
+_GUICtrlListView_SetImageList($settings_quickview_AvailableElements_Listview, $hToolBarImageListNorm,1)
+_GUICtrlListView_HideColumn(-1,1)
+$settings_quickview_Add_Button = GUICtrlCreateButton(_Get_langstr(958),306,147,152,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Settings_QuickView_activate_Item")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll,1564,0)
+_Control_set_DPI_Scaling($settings_quickview_Add_Button)
+GUICtrlCreateLabel(_Get_langstr(956),468,117,311,25,$SS_CENTER,-1)
+GUICtrlSetFont(-1,10,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,550)
+GUICtrlSetFont(-1,10,400,0,$Default_font)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+_Control_set_DPI_Scaling(-1)
+$Checkbox_hideprogramlog = GUICtrlCreateCheckbox(_Get_langstr(1396),10,50,769,20,-1,-1)
+GUICtrlSetOnEvent(-1,"_Config_QuickView_Toggle_Checkboxes")
+GUICtrlSetBkColor(-1,"0xFFFFFF")
+GUICtrlSetResizing(-1,546)
+_Control_set_DPI_Scaling($Checkbox_hideprogramlog)
+GUICtrlCreateLabel(_Get_langstr(955),1153,86,289,25,$SS_CENTER,-1)
+GUICtrlSetFont(-1,10,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,802)
+GUICtrlSetFont(-1,10,400,0,$Default_font)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateLabel(_Get_langstr(1204),51,9,692,25,-1,-1)
+GUICtrlSetFont(-1,12,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,546)
+GUICtrlSetFont(-1,12,400,0,$Default_font)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+_Control_set_DPI_Scaling(-1)
+$settings_quickview_Remove_Button = GUICtrlCreateButton(_Get_langstr(113),306,185,152,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Settings_QuickView_remove_Item")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll,1563,0)
+_Control_set_DPI_Scaling($settings_quickview_Remove_Button)
+$settings_quickview_Up_Button = GUICtrlCreateButton(_Get_langstr(953),306,223,152,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Settings_QuickView_ListView_MoveUp")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll,1737,0)
+_Control_set_DPI_Scaling($settings_quickview_Up_Button)
+$settings_quickview_Down_Button = GUICtrlCreateButton(_Get_langstr(954),306,262,152,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Settings_QuickView_ListView_MoveDown")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll,1736,0)
+_Control_set_DPI_Scaling($settings_quickview_Down_Button)
+$settings_quickview_Default_Button = GUICtrlCreateButton(_Get_langstr(248),306,302,152,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Settings_QuickView_Restore_Default")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll, 268,0)
+_Control_set_DPI_Scaling($settings_quickview_Default_Button)
+$QuickView_NoTextinTabs_checkbox = GUICtrlCreateCheckbox(_Get_langstr(1393),38,80,723,20,-1,-1)
+GUICtrlSetBkColor(-1,"0xFFFFFF")
+GUICtrlSetResizing(-1,546)
+_Control_set_DPI_Scaling($QuickView_NoTextinTabs_checkbox)
+GUICtrlCreatePic("",10,82,16,16,-1,-1)
+GUICtrlSetResizing(-1,802)
+_Control_set_DPI_Scaling(-1,true)
+_SetIconAlpha(-1, $smallIconsdll,_ISN_Pfeil_ID_aus_smallicons_DLL(),16,16)
+GUICtrlCreatePic("",10,5,32,32,-1,-1)
+GUICtrlSetResizing(-1,802)
+_Control_set_DPI_Scaling(-1,true)
+_SetIconAlpha(-1, $bigiconsdll,640 + 1,32,32)
+
+
+
+#cs
+[gui]
+Handle_deklaration=
+Handle_deklaration_const=false
+title=ISNSettings_QuickView_Page
+breite=791
+hoehe=554
+style=$WS_POPUP
+exstyle=-1
+bgcolour=0xFFFFFF
+bgimage=none
+handle=$ISNSettings_QuickView_Page
+parent=
+code=_Control_set_DPI_Scaling($gui_handle)[BREAK]GUISetBkColor($Fenster_Hintergrundfarbe,$gui_handle)[BREAK]GUISetFont ($Default_font_size,400, 0,$Default_font,$gui_handle)[BREAK]_WinAPI_SetParent($gui_handle, $Config_GUI)[BREAK]_GUIScrollbars_Generate($gui_handle, 0, 10)[BREAK]
+codebeforegui=
+xpos=-1
+ypos=-1
+center_gui=true
+title_textmode=normal
+isf_include_once=false
+only_controls_in_isf=false
+const_modus=default
+gui_code_in_function=false
+gui_code_in_function_name=
+gui_event_close=
+gui_event_minimize=
+gui_event_restore=
+gui_event_maximize=
+gui_event_mousemove=
+gui_event_primarydown=
+gui_event_primaryup=
+gui_event_secoundarydown=
+gui_event_secoundaryup=
+gui_event_resized=
+gui_event_dropped=
+[0x000823A0]
+handle=409
+locked=0
+code=GUICtrlSetFont(-1,12,400,0,$Default_font)[BREAK]GUICtrlSetColor(-1,$Titel_Schriftfarbe)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=label
+x=51
+y=9
+width=692
+height=25
+text=_Get_langstr(1204)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=12
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=9
+tabpage=-1
+textmode=func
+iconindex=
+resize=546
+[0x000123A2]
+handle=410
+locked=0
+resize=802
+code=_Control_set_DPI_Scaling($control_handle,true)[BREAK]_SetIconAlpha(-1, $bigiconsdll,640 + 1,32,32)
+type=image
+x=10
+y=5
+width=32
+height=32
+tooltip=
+text=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=32
+tabpage=-1
+iconindex=
+textmode=text
+[0x000123A4]
+handle=411
+locked=0
+code=GUICtrlSetFont(-1,10,400,0,$Default_font)[BREAK]GUICtrlSetColor(-1,$Titel_Schriftfarbe)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=label
+x=10
+y=117
+width=289
+height=25
+text=_Get_langstr(955)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$SS_CENTER
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=10
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+order=3
+[0x000123A6]
+handle=412
+locked=0
+resize=354
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]_GUICtrlListView_SetImageList($control_handle, $hToolBarImageListNorm,1)[BREAK]_GUICtrlListView_HideColumn(-1,1)
+type=listview
+x=6
+y=148
+width=293
+height=396
+text=text|id
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$LVS_REPORT+$LVS_NOCOLUMNHEADER+$LVS_SINGLESEL+$LVS_SHOWSELALWAYS
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$settings_quickview_ActiveElements_Listview
+func=
+bgimage=
+order=4
+tabpage=-1
+iconindex=
+textmode=text
+[0x000323AC]
+handle=413
+locked=0
+resize=102
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]_GUICtrlListView_SetImageList($control_handle, $hToolBarImageListNorm,1)[BREAK]_GUICtrlListView_HideColumn(-1,1)
+type=listview
+x=465
+y=148
+width=314
+height=396
+text=text|id
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$LVS_REPORT+$LVS_NOCOLUMNHEADER+$LVS_SINGLESEL+$LVS_SHOWSELALWAYS
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$settings_quickview_AvailableElements_Listview
+func=
+bgimage=
+tabpage=-1
+iconindex=
+textmode=text
+order=5
+[0x000323B2]
+handle=414
+locked=0
+resize=802
+code=Button_AddIcon(-1, $smallIconsdll,1564,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=306
+y=147
+width=152
+height=30
+text=_Get_langstr(958)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$settings_quickview_Add_Button
+func=_Settings_QuickView_activate_Item
+bgimage=
+order=6
+tabpage=-1
+iconindex=
+textmode=func
+[0x000123B4]
+handle=415
+locked=0
+code=GUICtrlSetFont(-1,10,400,0,$Default_font)[BREAK]GUICtrlSetColor(-1,$Titel_Schriftfarbe)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=label
+x=468
+y=117
+width=311
+height=25
+text=_Get_langstr(956)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$SS_CENTER
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=10
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+tabpage=-1
+textmode=func
+iconindex=
+resize=550
+order=7
+[0x000123B6]
+handle=416
+locked=0
+resize=546
+code=_Control_set_DPI_Scaling($control_handle)
+type=checkbox
+x=10
+y=50
+width=769
+height=20
+text=_Get_langstr(1396)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xFFFFFF
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Checkbox_hideprogramlog
+func=_Config_QuickView_Toggle_Checkboxes
+bgimage=
+order=8
+tabpage=-1
+iconindex=
+textmode=func
+[0x000123B8]
+handle=417
+locked=0
+code=GUICtrlSetFont(-1,10,400,0,$Default_font)[BREAK]GUICtrlSetColor(-1,$Titel_Schriftfarbe)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=label
+x=1153
+y=86
+width=289
+height=25
+text=_Get_langstr(955)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$SS_CENTER
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=10
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+order=9
+[0x000123BA]
+handle=418
+locked=0
+resize=802
+code=Button_AddIcon(-1, $smallIconsdll,1563,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=306
+y=185
+width=152
+height=30
+text=_Get_langstr(113)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$settings_quickview_Remove_Button
+func=_Settings_QuickView_remove_Item
+bgimage=
+tabpage=-1
+iconindex=
+textmode=func
+order=10
+[0x000123BC]
+handle=419
+locked=0
+resize=802
+code=Button_AddIcon(-1, $smallIconsdll,1737,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=306
+y=223
+width=152
+height=30
+text=_Get_langstr(953)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$settings_quickview_Up_Button
+func=_Settings_QuickView_ListView_MoveUp
+bgimage=
+tabpage=-1
+iconindex=
+textmode=func
+order=11
+[0x000123BE]
+handle=420
+locked=0
+resize=802
+code=Button_AddIcon(-1, $smallIconsdll,1736,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=306
+y=262
+width=152
+height=30
+text=_Get_langstr(954)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$settings_quickview_Down_Button
+func=_Settings_QuickView_ListView_MoveDown
+bgimage=
+tabpage=-1
+iconindex=
+textmode=func
+order=12
+[0x000123C0]
+handle=421
+locked=0
+resize=802
+code=Button_AddIcon(-1, $smallIconsdll, 268,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=306
+y=302
+width=152
+height=30
+text=_Get_langstr(248)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$settings_quickview_Default_Button
+func=_Settings_QuickView_Restore_Default
+bgimage=
+tabpage=-1
+iconindex=
+textmode=func
+order=13
+[0x000223C4]
+handle=422
+locked=0
+resize=546
+code=_Control_set_DPI_Scaling($control_handle)
+type=checkbox
+x=38
+y=80
+width=723
+height=20
+text=_Get_langstr(1393)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xFFFFFF
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$QuickView_NoTextinTabs_checkbox
+func=
+bgimage=
+tabpage=-1
+iconindex=
+textmode=func
+order=14
+[0x000223C6]
+handle=423
+locked=0
+resize=802
+code=_Control_set_DPI_Scaling($control_handle,true)[BREAK]_SetIconAlpha(-1, $smallIconsdll,_ISN_Pfeil_ID_aus_smallicons_DLL(),16,16)
+type=image
+x=10
+y=82
+width=16
+height=16
+tooltip=
+text=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+tabpage=-1
+iconindex=
+textmode=text
+order=15
+#ce

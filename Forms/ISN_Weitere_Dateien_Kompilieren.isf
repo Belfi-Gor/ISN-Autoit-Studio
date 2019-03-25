@@ -1,0 +1,410 @@
+; -- Created with ISN Form Studio 2 for ISN AutoIt Studio -- ;
+#include <StaticConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <WindowsConstants.au3>
+#Include <GuiButton.au3>
+#include <GuiListView.au3>
+
+$Weitere_Dateien_Kompilieren_GUI = GUICreate(_Get_langstr(1063),831,431,-1,-1,BitOr($WS_POPUP,$WS_CAPTION,$WS_SIZEBOX,$WS_SYSMENU,$WS_MAXIMIZEBOX),$ISN_WS_EX_MDICHILD,$Studiofenster)
+GUISetBkColor(0xFFFFFF,$Weitere_Dateien_Kompilieren_GUI)
+GUISetOnEvent($GUI_EVENT_CLOSE, "_Weitere_Dateien_zum_Kompilieren_waehlen_Abbrechen", $Weitere_Dateien_Kompilieren_GUI)
+GUISetOnEvent($GUI_EVENT_RESTORE, "_Elemente_an_Fesntergroesse_anpassen", $Weitere_Dateien_Kompilieren_GUI)
+GUISetOnEvent($GUI_EVENT_MAXIMIZE, "_Elemente_an_Fesntergroesse_anpassen", $Weitere_Dateien_Kompilieren_GUI)
+GUISetOnEvent($GUI_EVENT_RESIZED, "_Elemente_an_Fesntergroesse_anpassen", $Weitere_Dateien_Kompilieren_GUI)
+GUISetIcon($Weitere_Dateien_Kompilieren_GUI, $smallIconsdll,529)
+_Control_set_DPI_Scaling($Weitere_Dateien_Kompilieren_GUI)
+_GUISetIcon($Weitere_Dateien_Kompilieren_GUI, $smallIconsdll,527)
+_CenterOnMonitor($Weitere_Dateien_Kompilieren_GUI,"", $Runonmonitor)
+GUISetFont ($Default_font_size,400, 0,$Default_font,$Weitere_Dateien_Kompilieren_GUI)
+guictrlcreatepic(@scriptdir&"\Data\wintop.jpg",0,0,831,70)
+GUICtrlSetResizing(-1,550)
+_Control_set_DPI_Scaling(-1)
+if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\wintop_dark.png")	
+GUICtrlSetState(-1,$GUI_DISABLE)
+guictrlcreatepic(@scriptdir&"\Data\row_bottom.jpg",0,431-45,831,45)
+GUICtrlSetResizing(-1,582)
+_Control_set_DPI_Scaling(-1)
+if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\row_bottom_dark.png")
+GUICtrlSetState(-1,$GUI_DISABLE)
+GUISetBkColor($Fenster_Hintergrundfarbe,$Weitere_Dateien_Kompilieren_GUI)
+GUICtrlCreateLabel(_Get_langstr(1063),50,10,750,35,-1,-1)
+GUICtrlSetFont(-1,16,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,550)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(7),10,394,100,30,$BS_DEFPUSHBUTTON,-1)
+GUICtrlSetOnEvent(-1,"_Weitere_Dateien_zum_Kompilieren_waehlen_OK")
+GUICtrlSetResizing(-1,834)
+Button_AddIcon(-1, $smallIconsdll, 314,0)
+_Control_set_DPI_Scaling(-1)
+$Weitere_Dateien_Kompilieren_GUI_Listview = GUICtrlCreatelistview("Datei",350,78,425,286,BitOr($LVS_REPORT,$LVS_SINGLESEL,$LVS_SHOWSELALWAYS,$LVS_NOCOLUMNHEADER),BitOr($LVS_EX_FULLROWSELECT,$LVS_EX_GRIDLINES,$LVS_EX_DOUBLEBUFFER))
+GUICtrlSetResizing(-1,102)
+_GUICtrlListView_SetImageList($Weitere_Dateien_Kompilieren_GUI_Listview, $hImage,1)
+_Control_set_DPI_Scaling($Weitere_Dateien_Kompilieren_GUI_Listview)
+GUICtrlCreateButton(_Get_langstr(8),115,394,100,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Weitere_Dateien_zum_Kompilieren_waehlen_Abbrechen")
+GUICtrlSetResizing(-1,834)
+Button_AddIcon(-1, $smallIconsdll, 1173,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateLabel(_Get_langstr(1067),227,394,585,30,$SS_CENTERIMAGE,-1)
+GUICtrlSetColor(-1,"0x808080")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,582)
+_Control_set_DPI_Scaling(-1)
+$Weitere_Dateien_Kompilieren_nach_oben_button = GUICtrlCreateButton("",782,78,30,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Weitere_Dateien_Kompilieren_Eintrag_nach_oben_verschieben")
+GUICtrlSetResizing(-1,804)
+Button_AddIcon(-1, $smallIconsdll,1737,4)
+if $Skin_is_used = "true" Then
+GUICtrlDelete($Weitere_Dateien_Kompilieren_nach_oben_button)
+$Weitere_Dateien_Kompilieren_nach_oben_button = GUICtrlCreateButton("",782,78,30,30,$BS_ICON)
+_GUICtrlButton_SetImage($Weitere_Dateien_Kompilieren_nach_oben_button, $smallIconsdll, 1737, false)
+Endif
+GUICtrlSetResizing($Weitere_Dateien_Kompilieren_nach_oben_button,804)
+GUICtrlSetOnEvent($Weitere_Dateien_Kompilieren_nach_oben_button,"_Weitere_Dateien_Kompilieren_Eintrag_nach_oben_verschieben")
+_Control_set_DPI_Scaling($Weitere_Dateien_Kompilieren_nach_oben_button)
+$Weitere_Dateien_Kompilieren_GUI_Treeview_dummy = GUICtrlCreateLabel("treeview dummy",10,58,318,319,-1,-1)
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,354)
+_Control_set_DPI_Scaling($Weitere_Dateien_Kompilieren_GUI_Treeview_dummy)
+GUICtrlSetState($Weitere_Dateien_Kompilieren_GUI_Treeview_dummy,$GUI_HIDE)
+$Weitere_Dateien_Kompilieren_nach_unten_button = GUICtrlCreateButton("",782,112,30,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Weitere_Dateien_Kompilieren_Eintrag_nach_unten_verschieben")
+GUICtrlSetResizing(-1,804)
+Button_AddIcon(-1, $smallIconsdll,1736,4)
+if $Skin_is_used = "true" Then
+GUICtrlDelete($Weitere_Dateien_Kompilieren_nach_unten_button)
+$Weitere_Dateien_Kompilieren_nach_unten_button = GUICtrlCreateButton("",782,112,30,30,$BS_ICON)
+_GUICtrlButton_SetImage($Weitere_Dateien_Kompilieren_nach_unten_button, $smallIconsdll, 1736, false)
+Endif
+GUICtrlSetResizing($Weitere_Dateien_Kompilieren_nach_unten_button,804)
+GUICtrlSetOnEvent($Weitere_Dateien_Kompilieren_nach_unten_button,"_Weitere_Dateien_Kompilieren_Eintrag_nach_unten_verschieben")
+_Control_set_DPI_Scaling($Weitere_Dateien_Kompilieren_nach_unten_button)
+GUICtrlCreateGroup(_Get_langstr(1068),340,51,480,325,$BS_CENTER,-1)
+GUICtrlSetFont(-1,8,800,0,"MS Sans Serif")
+GUICtrlSetBkColor(-1,"0xFFFFFF")
+GUICtrlSetResizing(-1,102)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreatePic("",10,10,32,32,-1,-1)
+_Control_set_DPI_Scaling(-1)
+_SetIconAlpha(-1, $bigiconsdll,171,32,32)
+
+
+
+#cs
+[gui]
+Handle_deklaration=
+Handle_deklaration_const=false
+title=_Get_langstr(1063)
+breite=831
+hoehe=431
+style=$WS_POPUP+$WS_CAPTION+$WS_SIZEBOX+$WS_SYSMENU+$WS_MAXIMIZEBOX
+exstyle=$ISN_WS_EX_MDICHILD
+bgcolour=0xFFFFFF
+bgimage=none
+handle=$Weitere_Dateien_Kompilieren_GUI
+parent=$Studiofenster
+code=GUISetIcon($Weitere_Dateien_Kompilieren_GUI, $smallIconsdll,529)[BREAK]_Control_set_DPI_Scaling($Weitere_Dateien_Kompilieren_GUI)[BREAK]_GUISetIcon($Weitere_Dateien_Kompilieren_GUI, $smallIconsdll,527)[BREAK]_CenterOnMonitor($Weitere_Dateien_Kompilieren_GUI,"", $Runonmonitor)[BREAK]GUISetFont ($Default_font_size,400, 0,$Default_font,$Weitere_Dateien_Kompilieren_GUI)[BREAK]guictrlcreatepic(@scriptdir&"\Data\wintop.jpg",0,0,831,70)[BREAK]GUICtrlSetResizing(-1,550)[BREAK]_Control_set_DPI_Scaling(-1)[BREAK]if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\wintop_dark.png")	[BREAK]GUICtrlSetState(-1,$GUI_DISABLE)[BREAK]guictrlcreatepic(@scriptdir&"\Data\row_bottom.jpg",0,431-45,831,45)[BREAK]GUICtrlSetResizing(-1,582)[BREAK]_Control_set_DPI_Scaling(-1)[BREAK]if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\row_bottom_dark.png")[BREAK]GUICtrlSetState(-1,$GUI_DISABLE)[BREAK]GUISetBkColor($Fenster_Hintergrundfarbe,$Weitere_Dateien_Kompilieren_GUI)
+codebeforegui=
+xpos=-1
+ypos=-1
+center_gui=true
+title_textmode=func
+isf_include_once=false
+only_controls_in_isf=false
+const_modus=default
+gui_code_in_function=false
+gui_code_in_function_name=
+gui_event_close=_Weitere_Dateien_zum_Kompilieren_waehlen_Abbrechen
+gui_event_minimize=
+gui_event_restore=_Elemente_an_Fesntergroesse_anpassen
+gui_event_maximize=_Elemente_an_Fesntergroesse_anpassen
+gui_event_mousemove=
+gui_event_primarydown=
+gui_event_primaryup=
+gui_event_secoundarydown=
+gui_event_secoundaryup=
+gui_event_resized=_Elemente_an_Fesntergroesse_anpassen
+gui_event_dropped=
+[0x001D16DC]
+handle=409
+code=GUICtrlSetColor(-1,$Titel_Schriftfarbe)[BREAK]_Control_set_DPI_Scaling($Control_handle)
+type=label
+x=50
+y=10
+width=750
+height=35
+text=_Get_langstr(1063)
+state=80
+style=
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=16
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=0
+tabpage=-1
+tooltip=
+resize=550
+textmode=func
+locked=0
+iconindex=
+[0x0012179E]
+handle=410
+code=Button_AddIcon(-1, $smallIconsdll, 314,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=10
+y=394
+width=100
+height=30
+text=_Get_langstr(7)
+state=80
+style=$BS_DEFPUSHBUTTON
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Weitere_Dateien_zum_Kompilieren_waehlen_OK
+bgimage=
+order=4
+tabpage=-1
+tooltip=
+resize=834
+textmode=func
+iconindex=
+[0x00111776]
+handle=411
+code=Button_AddIcon(-1, $smallIconsdll, 1173,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=115
+y=394
+width=100
+height=30
+text=_Get_langstr(8)
+state=80
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Weitere_Dateien_zum_Kompilieren_waehlen_Abbrechen
+bgimage=
+order=5
+tabpage=-1
+tooltip=
+resize=834
+textmode=func
+locked=0
+iconindex=
+[0x00151778]
+handle=412
+locked=0
+resize=102
+code=_GUICtrlListView_SetImageList($Weitere_Dateien_Kompilieren_GUI_Listview, $hImage,1)[BREAK]_Control_set_DPI_Scaling($Control_handle)
+type=listview
+x=350
+y=78
+width=425
+height=286
+text=Datei
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$LVS_REPORT+$LVS_SINGLESEL+$LVS_SHOWSELALWAYS+$LVS_NOCOLUMNHEADER
+exstyle=$LVS_EX_FULLROWSELECT+$LVS_EX_GRIDLINES+$LVS_EX_DOUBLEBUFFER
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Weitere_Dateien_Kompilieren_GUI_Listview
+func=
+bgimage=
+order=5
+tabpage=-1
+textmode=text
+iconindex=
+[0x001B17A8]
+handle=413
+locked=0
+resize=582
+code=_Control_set_DPI_Scaling($control_handle)
+type=label
+x=227
+y=394
+width=585
+height=30
+text=_Get_langstr(1067)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$SS_CENTERIMAGE
+exstyle=
+textcolour=0x808080
+bgcolour=-2
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+tabpage=-1
+textmode=func
+order=7
+iconindex=
+[0x003D290A]
+handle=414
+locked=0
+resize=804
+code=Button_AddIcon(-1, $smallIconsdll,1737,4)[BREAK]if $Skin_is_used = "true" Then[BREAK]GUICtrlDelete($Weitere_Dateien_Kompilieren_nach_oben_button)[BREAK]$Weitere_Dateien_Kompilieren_nach_oben_button = GUICtrlCreateButton("",782,78,30,30,$BS_ICON)[BREAK]_GUICtrlButton_SetImage($Weitere_Dateien_Kompilieren_nach_oben_button, $smallIconsdll, 1737, false)[BREAK]Endif[BREAK]GUICtrlSetResizing($Weitere_Dateien_Kompilieren_nach_oben_button,804)[BREAK]GUICtrlSetOnEvent($Weitere_Dateien_Kompilieren_nach_oben_button,"_Weitere_Dateien_Kompilieren_Eintrag_nach_oben_verschieben")[BREAK]_Control_set_DPI_Scaling($Weitere_Dateien_Kompilieren_nach_oben_button)
+type=button
+x=782
+y=78
+width=30
+height=30
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Weitere_Dateien_Kompilieren_nach_oben_button
+func=_Weitere_Dateien_Kompilieren_Eintrag_nach_oben_verschieben
+bgimage=
+order=8
+tabpage=-1
+textmode=text
+iconindex=
+[0x00120CBC]
+handle=415
+locked=0
+resize=102
+code=_Control_set_DPI_Scaling($Control_handle)
+type=group
+x=340
+y=51
+width=480
+height=325
+text=_Get_langstr(1068)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$BS_CENTER
+exstyle=
+textcolour=0x000000
+bgcolour=0xFFFFFF
+font=MS Sans Serif
+fontsize=8
+fontstyle=800
+fontattribute=0
+id=
+func=
+bgimage=
+order=9
+tabpage=-1
+textmode=func
+iconindex=
+[0x00140CBE]
+handle=416
+locked=0
+resize=804
+code=Button_AddIcon(-1, $smallIconsdll,1736,4)[BREAK]if $Skin_is_used = "true" Then[BREAK]GUICtrlDelete($Weitere_Dateien_Kompilieren_nach_unten_button)[BREAK]$Weitere_Dateien_Kompilieren_nach_unten_button = GUICtrlCreateButton("",782,112,30,30,$BS_ICON)[BREAK]_GUICtrlButton_SetImage($Weitere_Dateien_Kompilieren_nach_unten_button, $smallIconsdll, 1736, false)[BREAK]Endif[BREAK]GUICtrlSetResizing($Weitere_Dateien_Kompilieren_nach_unten_button,804)[BREAK]GUICtrlSetOnEvent($Weitere_Dateien_Kompilieren_nach_unten_button,"_Weitere_Dateien_Kompilieren_Eintrag_nach_unten_verschieben")[BREAK]_Control_set_DPI_Scaling($Weitere_Dateien_Kompilieren_nach_unten_button)
+type=button
+x=782
+y=112
+width=30
+height=30
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Weitere_Dateien_Kompilieren_nach_unten_button
+func=_Weitere_Dateien_Kompilieren_Eintrag_nach_unten_verschieben
+bgimage=
+tabpage=-1
+textmode=text
+order=9
+iconindex=
+[0x000D1CCC]
+handle=417
+locked=0
+resize=354
+code=_Control_set_DPI_Scaling($Control_handle)[BREAK]GUICtrlSetState($Control_handle,$GUI_HIDE)
+type=label
+x=10
+y=58
+width=318
+height=319
+text=treeview dummy
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=-2
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Weitere_Dateien_Kompilieren_GUI_Treeview_dummy
+func=
+bgimage=
+order=9
+tabpage=-1
+iconindex=
+textmode=text
+[0x000D37CA]
+handle=418
+locked=0
+resize=
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]_SetIconAlpha($control_handle, $bigiconsdll,171,32,32)
+type=image
+x=10
+y=10
+width=32
+height=32
+tooltip=
+text=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=10
+tabpage=-1
+iconindex=
+textmode=text
+#ce

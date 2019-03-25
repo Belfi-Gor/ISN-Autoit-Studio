@@ -1,0 +1,386 @@
+; -- Created with ISN Form Studio 2 for ISN AutoIt Studio -- ;
+#include <StaticConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <WindowsConstants.au3>
+#Include <GuiButton.au3>
+#include <GuiListView.au3>
+
+$settings_additional_project_paths_GUI = GUICreate(_Get_langstr(1345),639,511,-1,-1,BitOr($WS_POPUP,$WS_CAPTION,$WS_SIZEBOX,$WS_SYSMENU,$WS_MAXIMIZEBOX),$ISN_WS_EX_MDICHILD,$config_GUI)
+GUISetBkColor(0xFFFFFF,$settings_additional_project_paths_GUI)
+GUISetOnEvent($GUI_EVENT_CLOSE, "_Settings_Hide_additional_Project_Paths_GUI", $settings_additional_project_paths_GUI)
+_GUISetIcon($settings_additional_project_paths_GUI, $smallIconsdll, 202)
+_Control_set_DPI_Scaling($settings_additional_project_paths_GUI)
+GUISetFont ($Default_font_size,400, 0,$Default_font,$settings_additional_project_paths_GUI)
+_CenterOnMonitor($settings_additional_project_paths_GUI,"", $Runonmonitor)
+GUISetBkColor($Fenster_Hintergrundfarbe,$settings_additional_project_paths_GUI)
+guictrlcreatepic(@scriptdir&"\Data\wintop.jpg",0,0,639,30)
+GUICtrlSetResizing(-1,550)
+_Control_set_DPI_Scaling(-1)
+if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\wintop_dark.png")
+GUICtrlSetState(-1,$GUI_DISABLE)
+guictrlcreatepic(@scriptdir&"\Data\row_bottom.jpg",0,511-50,639,50)
+GUICtrlSetResizing(-1,582)
+_Control_set_DPI_Scaling(-1)
+if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\row_bottom_dark.png")
+GUICtrlSetState(-1,$GUI_DISABLE)
+GUICtrlCreateLabel(_Get_langstr(1345),54,13,575,32,-1,-1)
+GUICtrlSetFont(-1,16,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,550)
+GUICtrlSetFont(-1,16,400,0,$Default_font)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(7),10,471,119,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Settings_additional_Project_Paths_OK")
+GUICtrlSetResizing(-1,834)
+Button_AddIcon(-1, $smallIconsdll, 314,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(8),140,471,119,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Settings_Hide_additional_Project_Paths_GUI")
+GUICtrlSetResizing(-1,834)
+Button_AddIcon(-1, $smallIconsdll, 1173,0)
+_Control_set_DPI_Scaling(-1)
+$Settings_Additional_Project_Paths_Remove_Path_Button = GUICtrlCreateButton("",10,94,30,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_additional_Project_Paths_Remove_Item")
+Button_AddIcon(-1, $smallIconsdll, 1727,4)
+if $Skin_is_used = "true" Then
+GUICtrlDelete($Settings_Additional_Project_Paths_Remove_Path_Button)
+$Settings_Additional_Project_Paths_Remove_Path_Button = GUICtrlCreatePic("",10,99,30,30,$SS_NOTIFY+$SS_CENTERIMAGE,$WS_EX_CLIENTEDGE)
+_SetIconAlpha($Settings_Additional_Project_Paths_Remove_Path_Button, $smallIconsdll,1727+1,16,16)
+GUICtrlSetOnEvent($Settings_Additional_Project_Paths_Remove_Path_Button,"_additional_Project_Paths_Remove_Item")
+Endif
+_GUIToolTip_AddTool($hToolTip_Config_GUI, 0, _Get_langstr(1076),GUICtrlGetHandle($Settings_Additional_Project_Paths_Remove_Path_Button))
+_Control_set_DPI_Scaling($Settings_Additional_Project_Paths_Remove_Path_Button)
+$settings_additional_project_paths_listview = GUICtrlCreatelistview(_Get_langstr(223),50,59,575,388,BitOr($LVS_SINGLESEL,$LVS_SHOWSELALWAYS),$WS_EX_CLIENTEDGE)
+GUICtrlSetResizing(-1,102)
+_Control_set_DPI_Scaling($settings_additional_project_paths_listview)
+_GUICtrlListView_SetExtendedListViewStyle(-1, BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_GRIDLINES, $LVS_EX_DOUBLEBUFFER))
+_GUICtrlListView_SetImageList($settings_additional_project_paths_listview, $hToolBarImageListNorm,1)
+GUICtrlCreatePic("",13,13,32,32,-1,-1)
+_Control_set_DPI_Scaling(-1,true)
+_SetIconAlpha(-1, $bigiconsdll,307,32,32)
+$Settings_Additional_Project_Paths_Move_Up_Button = GUICtrlCreateButton("",10,129,30,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_additional_Project_Paths_Move_Item_UP")
+Button_AddIcon(-1, $smallIconsdll, 1737,4)
+if $Skin_is_used = "true" Then
+GUICtrlDelete($Settings_Additional_Project_Paths_Move_Up_Button)
+$Settings_Additional_Project_Paths_Move_Up_Button = GUICtrlCreatePic("",10,134,30,30,$SS_NOTIFY+$SS_CENTERIMAGE,$WS_EX_CLIENTEDGE)
+_SetIconAlpha($Settings_Additional_Project_Paths_Move_Up_Button, $smallIconsdll,1737+1,16,16)
+GUICtrlSetOnEvent($Settings_Additional_Project_Paths_Move_Up_Button,"_additional_Project_Paths_Move_Item_UP")
+Endif
+_GUIToolTip_AddTool($hToolTip_Config_GUI, 0, _Get_langstr(1017),GUICtrlGetHandle($Settings_Additional_Project_Paths_Move_Up_Button))
+_Control_set_DPI_Scaling($Settings_Additional_Project_Paths_Move_Up_Button)
+$Settings_Additional_Project_Paths_Add_Path_Button = GUICtrlCreateButton("",10,59,30,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_additional_Project_Paths_Add_Item")
+Button_AddIcon(-1, $smallIconsdll, 1732,4)
+if $Skin_is_used = "true" Then
+GUICtrlDelete($Settings_Additional_Project_Paths_Add_Path_Button)
+$Settings_Additional_Project_Paths_Add_Path_Button = GUICtrlCreatePic("",10,64,30,30,$SS_NOTIFY+$SS_CENTERIMAGE,$WS_EX_CLIENTEDGE)
+_SetIconAlpha($Settings_Additional_Project_Paths_Add_Path_Button, $smallIconsdll,1732+1,16,16)
+GUICtrlSetOnEvent($Settings_Additional_Project_Paths_Add_Path_Button,"_additional_Project_Paths_Add_Item")
+Endif
+_GUIToolTip_AddTool($hToolTip_Config_GUI, 0, _Get_langstr(1075),GUICtrlGetHandle($Settings_Additional_Project_Paths_Add_Path_Button))
+_Control_set_DPI_Scaling($Settings_Additional_Project_Paths_Add_Path_Button)
+$Settings_Additional_Project_Paths_Move_Down_Button = GUICtrlCreateButton("",10,164,30,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_additional_Project_Paths_Move_Item_DOWN")
+Button_AddIcon(-1, $smallIconsdll, 1736,4)
+if $Skin_is_used = "true" Then
+GUICtrlDelete($Settings_Additional_Project_Paths_Move_Down_Button)
+$Settings_Additional_Project_Paths_Move_Down_Button = GUICtrlCreatePic("",10,169,30,30,$SS_NOTIFY+$SS_CENTERIMAGE,$WS_EX_CLIENTEDGE)
+_SetIconAlpha($Settings_Additional_Project_Paths_Move_Down_Button, $smallIconsdll,1736+1,16,16)
+GUICtrlSetOnEvent($Settings_Additional_Project_Paths_Move_Down_Button,"_additional_Project_Paths_Move_Item_DOWN")
+Endif
+_GUIToolTip_AddTool($hToolTip_Config_GUI, 0, _Get_langstr(1018),GUICtrlGetHandle($Settings_Additional_Project_Paths_Move_Down_Button))
+_Control_set_DPI_Scaling($Settings_Additional_Project_Paths_Move_Down_Button)
+
+
+
+#cs
+[gui]
+Handle_deklaration=
+Handle_deklaration_const=false
+title=_Get_langstr(1345)
+breite=639
+hoehe=511
+style=$WS_POPUP+$WS_CAPTION+$WS_SIZEBOX+$WS_SYSMENU+$WS_MAXIMIZEBOX
+exstyle=$ISN_WS_EX_MDICHILD
+bgcolour=0xFFFFFF
+bgimage=none
+handle=$settings_additional_project_paths_GUI
+parent=$config_GUI
+code=_GUISetIcon($GUI_HANDLE, $smallIconsdll, 202)[BREAK]_Control_set_DPI_Scaling($GUI_HANDLE)[BREAK]GUISetFont ($Default_font_size,400, 0,$Default_font,$GUI_HANDLE)[BREAK]_CenterOnMonitor($GUI_HANDLE,"", $Runonmonitor)[BREAK]GUISetBkColor($Fenster_Hintergrundfarbe,$GUI_HANDLE)[BREAK]guictrlcreatepic(@scriptdir&"\Data\wintop.jpg",0,0,639,30)[BREAK]GUICtrlSetResizing(-1,550)[BREAK]_Control_set_DPI_Scaling(-1)[BREAK]if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\wintop_dark.png")[BREAK]GUICtrlSetState(-1,$GUI_DISABLE)[BREAK]guictrlcreatepic(@scriptdir&"\Data\row_bottom.jpg",0,511-50,639,50)[BREAK]GUICtrlSetResizing(-1,582)[BREAK]_Control_set_DPI_Scaling(-1)[BREAK]if $ISN_Dark_Mode = "true" then _SetImage(-1, @scriptdir&"\Data\row_bottom_dark.png")[BREAK]GUICtrlSetState(-1,$GUI_DISABLE)
+codebeforegui=
+xpos=-1
+ypos=-1
+center_gui=true
+title_textmode=func
+isf_include_once=false
+only_controls_in_isf=false
+const_modus=default
+gui_code_in_function=false
+gui_code_in_function_name=
+gui_event_close=_Settings_Hide_additional_Project_Paths_GUI
+gui_event_minimize=
+gui_event_restore=
+gui_event_maximize=
+gui_event_mousemove=
+gui_event_primarydown=
+gui_event_primaryup=
+gui_event_secoundarydown=
+gui_event_secoundaryup=
+gui_event_resized=
+gui_event_dropped=
+[0x001A02C2]
+handle=409
+locked=0
+code=GUICtrlSetFont(-1,16,400,0,$Default_font)[BREAK]GUICtrlSetColor(-1,$Titel_Schriftfarbe)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=label
+x=54
+y=13
+width=575
+height=32
+text=_Get_langstr(1345)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=16
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=0
+tabpage=-1
+textmode=func
+iconindex=
+resize=550
+[0x0015226E]
+handle=410
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll, 314,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=10
+y=471
+width=119
+height=30
+text=_Get_langstr(7)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Settings_additional_Project_Paths_OK
+bgimage=
+order=4
+tabpage=-1
+textmode=func
+iconindex=
+resize=834
+[0x0048122C]
+handle=411
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll, 1173,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=140
+y=471
+width=119
+height=30
+text=_Get_langstr(8)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Settings_Hide_additional_Project_Paths_GUI
+bgimage=
+tabpage=-1
+textmode=func
+order=6
+iconindex=
+resize=834
+[0x003023EA]
+handle=412
+locked=0
+resize=
+code=_Control_set_DPI_Scaling($control_handle,true)[BREAK]_SetIconAlpha(-1, $bigiconsdll,307,32,32)
+type=image
+x=13
+y=13
+width=32
+height=32
+tooltip=
+text=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=7
+tabpage=-1
+iconindex=
+textmode=text
+[0x004E172A]
+handle=413
+locked=0
+resize=102
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]_GUICtrlListView_SetExtendedListViewStyle(-1, BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_GRIDLINES, $LVS_EX_DOUBLEBUFFER))[BREAK]_GUICtrlListView_SetImageList($settings_additional_project_paths_listview, $hToolBarImageListNorm,1)[BREAK]
+type=listview
+x=50
+y=59
+width=575
+height=388
+text=_Get_langstr(223)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$LVS_SINGLESEL+$LVS_SHOWSELALWAYS
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$settings_additional_project_paths_listview
+func=
+bgimage=
+order=7
+tabpage=-1
+iconindex=
+textmode=func
+[0x003E32F4]
+handle=414
+locked=0
+resize=
+code=Button_AddIcon(-1, $smallIconsdll, 1732,4)[BREAK]if $Skin_is_used = "true" Then[BREAK]GUICtrlDelete($control_handle)[BREAK]$control_handle = GUICtrlCreatePic("",10,64,30,30,$SS_NOTIFY+$SS_CENTERIMAGE,$WS_EX_CLIENTEDGE)[BREAK]_SetIconAlpha($control_handle, $smallIconsdll,1732+1,16,16)[BREAK]GUICtrlSetOnEvent($control_handle,"_additional_Project_Paths_Add_Item")[BREAK]Endif[BREAK]_GUIToolTip_AddTool($hToolTip_Config_GUI, 0, _Get_langstr(1075),GUICtrlGetHandle($control_handle))[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=10
+y=59
+width=30
+height=30
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Settings_Additional_Project_Paths_Add_Path_Button
+func=_additional_Project_Paths_Add_Item
+bgimage=
+order=8
+tabpage=-1
+iconindex=
+textmode=text
+[0x00463732]
+handle=415
+locked=0
+resize=
+code=Button_AddIcon(-1, $smallIconsdll, 1727,4)[BREAK]if $Skin_is_used = "true" Then[BREAK]GUICtrlDelete($control_handle)[BREAK]$control_handle = GUICtrlCreatePic("",10,99,30,30,$SS_NOTIFY+$SS_CENTERIMAGE,$WS_EX_CLIENTEDGE)[BREAK]_SetIconAlpha($control_handle, $smallIconsdll,1727+1,16,16)[BREAK]GUICtrlSetOnEvent($control_handle,"_additional_Project_Paths_Remove_Item")[BREAK]Endif[BREAK]_GUIToolTip_AddTool($hToolTip_Config_GUI, 0, _Get_langstr(1076),GUICtrlGetHandle($control_handle))[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=10
+y=94
+width=30
+height=30
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Settings_Additional_Project_Paths_Remove_Path_Button
+func=_additional_Project_Paths_Remove_Item
+bgimage=
+tabpage=-1
+iconindex=
+textmode=text
+order=7
+[0x00763326]
+handle=416
+locked=0
+resize=
+code=Button_AddIcon(-1, $smallIconsdll, 1737,4)[BREAK]if $Skin_is_used = "true" Then[BREAK]GUICtrlDelete($control_handle)[BREAK]$control_handle = GUICtrlCreatePic("",10,134,30,30,$SS_NOTIFY+$SS_CENTERIMAGE,$WS_EX_CLIENTEDGE)[BREAK]_SetIconAlpha($control_handle, $smallIconsdll,1737+1,16,16)[BREAK]GUICtrlSetOnEvent($control_handle,"_additional_Project_Paths_Move_Item_UP")[BREAK]Endif[BREAK]_GUIToolTip_AddTool($hToolTip_Config_GUI, 0, _Get_langstr(1017),GUICtrlGetHandle($control_handle))[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=10
+y=129
+width=30
+height=30
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Settings_Additional_Project_Paths_Move_Up_Button
+func=_additional_Project_Paths_Move_Item_UP
+bgimage=
+tabpage=-1
+iconindex=
+textmode=text
+order=8
+[0x005E3366]
+handle=417
+locked=0
+resize=
+code=Button_AddIcon(-1, $smallIconsdll, 1736,4)[BREAK]if $Skin_is_used = "true" Then[BREAK]GUICtrlDelete($control_handle)[BREAK]$control_handle = GUICtrlCreatePic("",10,169,30,30,$SS_NOTIFY+$SS_CENTERIMAGE,$WS_EX_CLIENTEDGE)[BREAK]_SetIconAlpha($control_handle, $smallIconsdll,1736+1,16,16)[BREAK]GUICtrlSetOnEvent($control_handle,"_additional_Project_Paths_Move_Item_DOWN")[BREAK]Endif[BREAK]_GUIToolTip_AddTool($hToolTip_Config_GUI, 0, _Get_langstr(1018),GUICtrlGetHandle($control_handle))[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=10
+y=164
+width=30
+height=30
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$Settings_Additional_Project_Paths_Move_Down_Button
+func=_additional_Project_Paths_Move_Item_DOWN
+bgimage=
+tabpage=-1
+iconindex=
+textmode=text
+order=9
+#ce

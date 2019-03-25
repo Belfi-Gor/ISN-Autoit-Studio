@@ -1,0 +1,455 @@
+; -- Created with ISN Form Studio 2 for ISN AutoIt Studio -- ;
+#include <StaticConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <WindowsConstants.au3>
+#Include <GuiButton.au3>
+#include <GuiListView.au3>
+
+$ISNSettings_Toolbar_Page = GUICreate("ISNSettings_Toolbar_Page",768,552,-1,-1,$WS_POPUP,-1)
+GUISetBkColor(0xFFFFFF,$ISNSettings_Toolbar_Page)
+_Control_set_DPI_Scaling($ISNSettings_Toolbar_Page)
+GUISetBkColor($Fenster_Hintergrundfarbe,$ISNSettings_Toolbar_Page)
+GUISetFont ($Default_font_size,400, 0,$Default_font,$ISNSettings_Toolbar_Page)
+_WinAPI_SetParent($ISNSettings_Toolbar_Page, $Config_GUI)
+GUICtrlCreateLabel(_Get_langstr(956),445,85,314,25,$SS_CENTER,-1)
+GUICtrlSetFont(-1,10,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,550)
+GUICtrlSetFont(-1,10,400,0,$Default_font)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateLabel(_Get_langstr(955),10,85,287,25,$SS_CENTER,-1)
+GUICtrlSetFont(-1,10,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,930)
+GUICtrlSetFont(-1,10,400,0,$Default_font)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateLabel(_Get_langstr(952),51,9,692,25,-1,-1)
+GUICtrlSetFont(-1,12,400,0,"Segoe UI")
+GUICtrlSetColor(-1,"0x003399")
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlSetResizing(-1,546)
+GUICtrlSetFont(-1,12,400,0,$Default_font)
+GUICtrlSetColor(-1,$Titel_Schriftfarbe)
+_Control_set_DPI_Scaling(-1)
+$einstellungen_toolbar_verfuegbareelemente_listview = GUICtrlCreatelistview("text|id",445,115,314,430,BitOr($LVS_REPORT,$LVS_NOCOLUMNHEADER,$LVS_SINGLESEL,$LVS_SHOWSELALWAYS),$WS_EX_CLIENTEDGE)
+GUICtrlSetResizing(-1,102)
+_Control_set_DPI_Scaling($einstellungen_toolbar_verfuegbareelemente_listview)
+_GUICtrlListView_SetImageList($einstellungen_toolbar_verfuegbareelemente_listview, $hToolBarImageListNorm,1)
+_GUICtrlListView_HideColumn(-1,1)
+$einstellungen_toolbar_aktiveelemente_listview = GUICtrlCreatelistview("text|id",6,115,293,425,BitOr($LVS_REPORT,$LVS_NOCOLUMNHEADER,$LVS_SINGLESEL,$LVS_SHOWSELALWAYS),$WS_EX_CLIENTEDGE)
+GUICtrlSetResizing(-1,354)
+_Control_set_DPI_Scaling($einstellungen_toolbar_aktiveelemente_listview)
+_GUICtrlListView_SetImageList($einstellungen_toolbar_aktiveelemente_listview, $hToolBarImageListNorm,1)
+_GUICtrlListView_HideColumn(-1,1)
+$settings_toolbar_display_vertical_checkbox = GUICtrlCreateCheckbox(_Get_langstr(1397),10,50,749,20,-1,-1)
+GUICtrlSetBkColor(-1,"0xFFFFFF")
+GUICtrlSetResizing(-1,546)
+_Control_set_DPI_Scaling($settings_toolbar_display_vertical_checkbox)
+GUICtrlCreatePic("",10,5,32,32,-1,-1)
+GUICtrlSetResizing(-1,802)
+_Control_set_DPI_Scaling(-1)
+_SetIconAlpha(-1, $smallIconsdll,1920,32,32)
+GUICtrlCreateButton(_Get_langstr(954),310,234,123,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Einstellungen_Toolbar_Eintrag_nach_unten")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll,1736,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(113),310,154,123,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Einstellungen_Toolbar_entferne_Eintrag")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll,1563,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(958),310,114,123,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Einstellungen_Toolbar_Eintrag_hinzufuegen")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll,1564,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(953),310,194,123,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Einstellungen_Toolbar_Eintrag_nach_oben")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll,1737,0)
+_Control_set_DPI_Scaling(-1)
+GUICtrlCreateButton(_Get_langstr(248),310,274,123,30,-1,-1)
+GUICtrlSetOnEvent(-1,"_Einstellungen_Toolbar_Standard_wiederherstellen")
+GUICtrlSetResizing(-1,802)
+Button_AddIcon(-1, $smallIconsdll, 268,0)
+_Control_set_DPI_Scaling(-1)
+
+
+
+#cs
+[gui]
+Handle_deklaration=
+Handle_deklaration_const=false
+title=ISNSettings_Toolbar_Page
+breite=768
+hoehe=552
+style=$WS_POPUP
+exstyle=-1
+bgcolour=0xFFFFFF
+bgimage=none
+handle=$ISNSettings_Toolbar_Page
+parent=
+code=_Control_set_DPI_Scaling($gui_handle)[BREAK]GUISetBkColor($Fenster_Hintergrundfarbe,$gui_handle)[BREAK]GUISetFont ($Default_font_size,400, 0,$Default_font,$gui_handle)[BREAK]_WinAPI_SetParent($gui_handle, $Config_GUI)
+codebeforegui=
+xpos=-1
+ypos=-1
+center_gui=true
+title_textmode=normal
+isf_include_once=false
+only_controls_in_isf=false
+const_modus=default
+gui_code_in_function=false
+gui_code_in_function_name=
+gui_event_close=
+gui_event_minimize=
+gui_event_restore=
+gui_event_maximize=
+gui_event_mousemove=
+gui_event_primarydown=
+gui_event_primaryup=
+gui_event_secoundarydown=
+gui_event_secoundaryup=
+gui_event_resized=
+gui_event_dropped=
+[0x00092618]
+handle=409
+locked=0
+code=GUICtrlSetFont(-1,12,400,0,$Default_font)[BREAK]GUICtrlSetColor(-1,$Titel_Schriftfarbe)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=label
+x=51
+y=9
+width=692
+height=25
+text=_Get_langstr(952)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=12
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=9
+tabpage=-1
+textmode=func
+iconindex=
+resize=546
+[0x0003261A]
+handle=410
+locked=0
+code=GUICtrlSetFont(-1,10,400,0,$Default_font)[BREAK]GUICtrlSetColor(-1,$Titel_Schriftfarbe)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=label
+x=10
+y=85
+width=287
+height=25
+text=_Get_langstr(955)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$SS_CENTER
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=10
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=9
+tabpage=-1
+textmode=func
+iconindex=
+resize=930
+[0x00022614]
+handle=411
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll,1564,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=310
+y=114
+width=123
+height=30
+text=_Get_langstr(958)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Einstellungen_Toolbar_Eintrag_hinzufuegen
+bgimage=
+order=17
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+[0x00022612]
+handle=412
+locked=0
+code=GUICtrlSetFont(-1,10,400,0,$Default_font)[BREAK]GUICtrlSetColor(-1,$Titel_Schriftfarbe)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=label
+x=445
+y=85
+width=314
+height=25
+text=_Get_langstr(956)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$SS_CENTER
+exstyle=
+textcolour=0x003399
+bgcolour=-2
+font=Segoe UI
+fontsize=10
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=9
+tabpage=-1
+textmode=func
+iconindex=
+resize=550
+[0x00092610]
+handle=413
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]_GUICtrlListView_SetImageList($einstellungen_toolbar_aktiveelemente_listview, $hToolBarImageListNorm,1)[BREAK]_GUICtrlListView_HideColumn(-1,1)
+type=listview
+x=6
+y=115
+width=293
+height=425
+text=text|id
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$LVS_REPORT+$LVS_NOCOLUMNHEADER+$LVS_SINGLESEL+$LVS_SHOWSELALWAYS
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$einstellungen_toolbar_aktiveelemente_listview
+func=
+bgimage=
+order=12
+tabpage=-1
+textmode=text
+iconindex=
+resize=354
+[0x00132052]
+handle=414
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll,1563,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=310
+y=154
+width=123
+height=30
+text=_Get_langstr(113)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Einstellungen_Toolbar_entferne_Eintrag
+bgimage=
+order=17
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+[0x000C222C]
+handle=415
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll, 268,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=310
+y=274
+width=123
+height=30
+text=_Get_langstr(248)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Einstellungen_Toolbar_Standard_wiederherstellen
+bgimage=
+order=17
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+[0x000C216A]
+handle=416
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll,1737,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=310
+y=194
+width=123
+height=30
+text=_Get_langstr(953)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Einstellungen_Toolbar_Eintrag_nach_oben
+bgimage=
+order=17
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+[0x000D21AE]
+handle=417
+locked=0
+code=Button_AddIcon(-1, $smallIconsdll,1736,0)[BREAK]_Control_set_DPI_Scaling($control_handle)
+type=button
+x=310
+y=234
+width=123
+height=30
+text=_Get_langstr(954)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=_Einstellungen_Toolbar_Eintrag_nach_unten
+bgimage=
+order=17
+tabpage=-1
+textmode=func
+iconindex=
+resize=802
+[0x000421D0]
+handle=418
+locked=0
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]_GUICtrlListView_SetImageList($einstellungen_toolbar_verfuegbareelemente_listview, $hToolBarImageListNorm,1)[BREAK]_GUICtrlListView_HideColumn(-1,1)
+type=listview
+x=445
+y=115
+width=314
+height=430
+text=text|id
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=$LVS_REPORT+$LVS_NOCOLUMNHEADER+$LVS_SINGLESEL+$LVS_SHOWSELALWAYS
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$einstellungen_toolbar_verfuegbareelemente_listview
+func=
+bgimage=
+order=12
+tabpage=-1
+textmode=text
+iconindex=
+resize=102
+[0x00330BF0]
+handle=419
+locked=0
+resize=802
+code=_Control_set_DPI_Scaling($control_handle)[BREAK]_SetIconAlpha(-1, $smallIconsdll,1920,32,32)
+type=image
+x=10
+y=5
+width=32
+height=32
+tooltip=
+text=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=13
+tabpage=-1
+iconindex=
+textmode=text
+[0x00062A1C]
+handle=420
+locked=0
+resize=546
+code=_Control_set_DPI_Scaling($control_handle)
+type=checkbox
+x=10
+y=50
+width=749
+height=20
+text=_Get_langstr(1397)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xFFFFFF
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$settings_toolbar_display_vertical_checkbox
+func=
+bgimage=
+order=12
+tabpage=-1
+iconindex=
+textmode=func
+#ce
